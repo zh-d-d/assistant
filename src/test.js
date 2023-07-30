@@ -1,2 +1,5 @@
-const token = process.env.WECHATY_PUPPET_PADLOCAL_TOKEN
-console.log('token:', token)
+import {getCalendarData} from "./stock/Api.js";
+
+let data = await getCalendarData()
+console.log('data',data)
+
