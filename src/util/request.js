@@ -2,7 +2,9 @@ import axios from 'axios'
 
 // create an axios instance
 const service = axios.create({
-    // baseURL: '',
+    baseURL: 'https://www.jisilu.cn',
+    retry: 10,
+    retryInterval: 3000,
     timeout: 5000 // request timeout
 })
 
@@ -14,7 +16,7 @@ service.interceptors.request.use(
     },
     error => {
         // do something with request error
-        console.log(error) // for debug
+        console.log('error', error) // for debug
         return Promise.reject(error)
     }
 )
@@ -33,12 +35,7 @@ service.interceptors.response.use(
      */
     response => {
         const res = response.data
-
-        console.log('zhangddres:', res)
-
-        // if the custom code is not 20000, it is judged as an error.
-        if (res.code !== 20000 && res.code !== 200) {
-
+        if (response.status !== 200) {
             return Promise.reject(new Error(res.message || 'Error'))
         } else {
             return res

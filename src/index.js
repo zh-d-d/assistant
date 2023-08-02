@@ -3,6 +3,7 @@ import {WechatyBuilder} from 'wechaty'
 import {config} from './config.js';
 import {onScan} from './listener/ScanListener.js'
 import {onMessage} from './listener/MessageListener.js'
+import {stockCalendarTask} from "./schedule/StockCalendarTask.js"
 
 const bot = WechatyBuilder.build({
     name: config.name,
@@ -15,5 +16,7 @@ const bot = WechatyBuilder.build({
 bot.on('scan', onScan)
     .on('message', onMessage)
     .start()
-    .then(()=>console.log('StarterBot', 'Starter Bot Started.'))
+    .then(() => {
+        stockCalendarTask(bot)
+    })
     .catch(e => console.error('StarterBot', e))
