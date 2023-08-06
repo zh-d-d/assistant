@@ -1,5 +1,6 @@
 import {getNextThreeDayStartTimeAndEndTime} from "../util/TimeUtil.js";
 import {getCalendarData} from "../stock/Api.js";
+import {parseMessage} from "../util/MessageUtil.js";
 
 async function onMessage(msg) {
     if (msg.self()) {
@@ -22,9 +23,18 @@ async function onMessage(msg) {
         var timeParam = getNextThreeDayStartTimeAndEndTime();
         var startTime = timeParam.startTime
         var endTime = timeParam.endTime
-        let data = await getCalendarData(startTime, endTime)
-        console.log('data', data)
-        await room.say(JSON.stringify(data), talker)
+        let executeStatus = false
+        while (!executeStatus) {
+            try {
+                let data = await getCalendarData(startTime, endTime)
+                let content = parseMessage(data);
+                await room.say(content, talker)
+                executeStatus = true
+            } catch (e) {
+                console.log('message auto replay fail.' + e)
+            }
+        }
+
     }
 }
 

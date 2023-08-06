@@ -9,10 +9,7 @@ const config = new Config()
 
 const bot = WechatyBuilder.build({
     name: config.name,
-    puppet: 'wechaty-puppet-padlocal',
-    puppetOptions: {
-        token: config.token
-    }
+    puppet: 'wechaty-puppet-wechat4u',
 })
 
 bot.on('scan', onScan)
