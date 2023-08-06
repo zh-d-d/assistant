@@ -1,4 +1,5 @@
-FROM node:18.17.0-alpine3.18
+#FROM node:18.17.0-alpine3.18
+FROM registry.cn-hangzhou.aliyuncs.com/dogbody/node:18.17.0-alpine3.18
 
 WORKDIR /home/app
 
